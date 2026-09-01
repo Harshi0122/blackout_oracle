@@ -1,0 +1,21 @@
+# Backend
+__pycache__/
+*.pyc
+*.egg-info/
+.env
+*.db
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/dist-ssr/
+frontend/.vite-source-tags.js
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log

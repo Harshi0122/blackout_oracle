@@ -1,0 +1,36 @@
+import type { BackendSnapshot } from './types';
+
+export const emptySnapshot = (): BackendSnapshot => ({
+  timestamp: Date.now(),
+  weather: {
+    mode: 'clear',
+    rainfall: 0,
+    windSpeed: 0,
+    temperature: 0,
+    humidity: 0,
+    lightningRate: 0,
+    floodLevel: 0,
+    cloudCover: 0,
+    pressure: 0,
+    visibility: 0,
+  },
+  grid: {
+    nodes: [],
+    edges: [],
+    totalLoad: 0,
+    totalGeneration: 0,
+    frequency: 0,
+    voltage: 0,
+    cascadeRisk: 0,
+    stability: 0,
+    renewablesShare: 0,
+  },
+  interventions: [],
+  cascadeSteps: [],
+  alerts: [],
+  predictions: [],
+  aiConfidence: 0,
+  rationale: [],
+  recommendationsRaw: [],
+  incidentsRaw: [],
+});

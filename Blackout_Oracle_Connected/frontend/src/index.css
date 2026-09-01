@@ -1,0 +1,302 @@
+@import "tailwindcss";
+
+/* ─── Fonts (loaded from index.html) ─── */
+:root {
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  --c-bg-0: #02030a;
+  --c-bg-1: #050b1a;
+  --c-bg-2: #0a1428;
+  --c-bg-3: #0f1c38;
+
+  --c-grid: rgba(56, 189, 248, 0.08);
+  --c-grid-strong: rgba(56, 189, 248, 0.18);
+
+  --c-cyan: #22d3ee;
+  --c-cyan-soft: #67e8f9;
+  --c-electric: #3b82f6;
+  --c-storm: #1e40af;
+  --c-purple: #a855f7;
+
+  --c-green: #10b981;
+  --c-yellow: #facc15;
+  --c-amber: #f59e0b;
+  --c-orange: #fb923c;
+  --c-red: #ef4444;
+  --c-red-hot: #f43f5e;
+
+  --shadow-glow-cyan: 0 0 24px rgba(34, 211, 238, 0.45);
+  --shadow-glow-red: 0 0 28px rgba(244, 63, 94, 0.55);
+}
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background: var(--c-bg-0);
+  color: #e2e8f0;
+  font-family: var(--font-body);
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.font-display { font-family: var(--font-display); letter-spacing: -0.01em; }
+.font-mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+
+/* ─── Cinematic ambient background ─── */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(1200px 800px at 80% -10%, rgba(168, 85, 247, 0.10), transparent 60%),
+    radial-gradient(900px 700px at 0% 100%, rgba(34, 211, 238, 0.08), transparent 65%),
+    radial-gradient(1400px 900px at 50% 120%, rgba(59, 130, 246, 0.10), transparent 70%);
+  z-index: 0;
+}
+
+/* ─── HUD Scanlines & Noise ─── */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  background-image:
+    repeating-linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.012) 0,
+      rgba(255, 255, 255, 0.012) 1px,
+      transparent 1px,
+      transparent 3px
+    );
+  mix-blend-mode: overlay;
+  opacity: 0.5;
+}
+
+/* ─── Scrollbar styling ─── */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: rgba(15, 28, 56, 0.5); }
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #22d3ee 0%, #3b82f6 100%);
+  border-radius: 8px;
+}
+
+/* ─── Glow text utility ─── */
+.glow-cyan { text-shadow: 0 0 18px rgba(34, 211, 238, 0.65); }
+.glow-red  { text-shadow: 0 0 18px rgba(244, 63, 94, 0.65); }
+.glow-amber { text-shadow: 0 0 16px rgba(245, 158, 11, 0.55); }
+
+/* ─── Frosted glass panel ─── */
+.glass {
+  background:
+    linear-gradient(180deg, rgba(15, 28, 56, 0.78), rgba(10, 20, 40, 0.85));
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  border: 1px solid rgba(56, 189, 248, 0.18);
+  box-shadow:
+    0 0 0 1px rgba(56, 189, 248, 0.05) inset,
+    0 12px 60px rgba(2, 6, 23, 0.55);
+}
+
+.glass-soft {
+  background:
+    linear-gradient(180deg, rgba(15, 28, 56, 0.55), rgba(10, 20, 40, 0.65));
+  backdrop-filter: blur(10px) saturate(120%);
+  border: 1px solid rgba(56, 189, 248, 0.10);
+}
+
+/* ─── Animated grid backdrop ─── */
+.bg-grid {
+  background-image:
+    linear-gradient(rgba(56, 189, 248, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(56, 189, 248, 0.06) 1px, transparent 1px);
+  background-size: 56px 56px;
+}
+
+.bg-grid-dense {
+  background-image:
+    linear-gradient(rgba(56, 189, 248, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(56, 189, 248, 0.08) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+/* ─── Pulse rings ─── */
+@keyframes pulseRing {
+  0% { transform: scale(0.8); opacity: 0.9; }
+  100% { transform: scale(2.4); opacity: 0; }
+}
+.pulse-ring { animation: pulseRing 2.2s ease-out infinite; }
+
+/* ─── Status dot colors ─── */
+.dot-green { background: var(--c-green); box-shadow: 0 0 10px var(--c-green); }
+.dot-yellow { background: var(--c-yellow); box-shadow: 0 0 10px var(--c-yellow); }
+.dot-orange { background: var(--c-orange); box-shadow: 0 0 12px var(--c-orange); }
+.dot-red { background: var(--c-red); box-shadow: 0 0 14px var(--c-red); }
+.dot-cyan { background: var(--c-cyan); box-shadow: 0 0 10px var(--c-cyan); }
+
+/* ─── Animated gradient borders ─── */
+@keyframes borderPan {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.animated-border {
+  position: relative;
+}
+.animated-border::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(120deg, rgba(34, 211, 238, 0.6), rgba(168, 85, 247, 0.6), rgba(34, 211, 238, 0.6));
+  background-size: 200% 200%;
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  animation: borderPan 5s linear infinite;
+  pointer-events: none;
+}
+
+/* ─── Lightning flash ─── */
+@keyframes lightning {
+  0%, 92%, 100% { background: rgba(255,255,255,0); }
+  93% { background: rgba(255,255,255,0.55); }
+  94% { background: rgba(220,235,255,0.18); }
+  96% { background: rgba(255,255,255,0.35); }
+}
+.flash-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+  mix-blend-mode: screen;
+  animation: lightning 8s linear infinite;
+}
+
+/* ─── Energy flow on SVG path ─── */
+@keyframes dashFlow {
+  to { stroke-dashoffset: -200; }
+}
+.flow-dash {
+  stroke-dasharray: 8 14;
+  animation: dashFlow 1.2s linear infinite;
+}
+.flow-dash-slow {
+  stroke-dasharray: 6 18;
+  animation: dashFlow 2.4s linear infinite;
+}
+
+/* ─── HUD corner bracket ─── */
+.hud-bracket {
+  position: relative;
+}
+.hud-bracket::before,
+.hud-bracket::after {
+  content: "";
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border: 1.5px solid var(--c-cyan);
+  opacity: 0.8;
+}
+.hud-bracket::before { top: 6px; left: 6px; border-right: 0; border-bottom: 0; }
+.hud-bracket::after { bottom: 6px; right: 6px; border-left: 0; border-top: 0; }
+
+/* ─── Live indicator ─── */
+@keyframes liveBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+.live-dot { animation: liveBlink 1.5s ease-in-out infinite; }
+
+/* ─── Number transition class (used by NumberAnim) ─── */
+@keyframes numFade {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.num-cell { display: inline-block; animation: numFade 220ms ease-out; }
+
+/* ─── Rotating radar sweep ─── */
+@keyframes radarSpin {
+  to { transform: rotate(360deg); }
+}
+.radar-sweep { animation: radarSpin 6s linear infinite; transform-origin: center; }
+
+/* ─── Critical alert vignette ─── */
+@keyframes alertVignette {
+  0%, 100% { box-shadow: inset 0 0 200px 60px rgba(244, 63, 94, 0); }
+  50% { box-shadow: inset 0 0 200px 60px rgba(244, 63, 94, 0.25); }
+}
+.alert-vignette {
+  animation: alertVignette 3s ease-in-out infinite;
+}
+
+/* ─── Marquee ticker ─── */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.marquee-track { animation: marquee 60s linear infinite; }
+
+/* ─── Smooth focus ring ─── */
+button:focus-visible, [role="button"]:focus-visible {
+  outline: 2px solid var(--c-cyan);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+/* ─── Custom range input ─── */
+input[type="range"] {
+  appearance: none;
+  -webkit-appearance: none;
+  background: transparent;
+  height: 28px;
+}
+input[type="range"]::-webkit-slider-runnable-track {
+  height: 4px;
+  background: linear-gradient(90deg, var(--c-cyan), var(--c-electric));
+  border-radius: 4px;
+}
+input[type="range"]::-webkit-slider-thumb {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  margin-top: -6px;
+  border-radius: 50%;
+  background: white;
+  box-shadow: 0 0 14px var(--c-cyan);
+  cursor: grab;
+}
+
+/* ─── App container ─── */
+.app-shell {
+  position: relative;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+.canvas-host {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.ui-layer {
+  position: relative;
+  z-index: 10;
+}.api-status{position:fixed;z-index:9999;right:18px;top:14px;display:flex;align-items:center;gap:7px;padding:7px 10px;border-radius:999px;font-size:10px;font-weight:800;letter-spacing:.12em;background:rgba(255,255,255,.78);backdrop-filter:blur(14px);box-shadow:0 8px 30px rgba(20,40,80,.12)}
+.api-status.online{color:#087b57}.api-status.offline{color:#b45309}.api-status button{border:0;background:transparent;display:grid;place-items:center;cursor:pointer;color:inherit;padding:1px}
+@media(max-width:700px){.api-status{right:10px;top:8px;font-size:8px}}
